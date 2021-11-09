@@ -1,4 +1,4 @@
-package tugaspengcit;
+package main;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
