@@ -9,8 +9,10 @@ public class Geometri {
 
     public static void main(String[] args) {
         readImage();
-        translation(image, 15, 10);
-        writeImage(image, "geometri_gbr1");
+//        translate(image, 15, 10);
+//        flip(image, "horizontal");
+//        scale(image, 2, 2);
+        writeImage(image, "geometri_gbr5");
     }
 
     private static void readImage() {
@@ -34,13 +36,26 @@ public class Geometri {
         }
     }
 
-    private static void translation(BufferedImage image, int m, int n) {
+    private static int[][] getPixelArray(BufferedImage image) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+        int[][] result = new int[height][width];
+
+        for (int i=0;i<height;i++) {
+            for(int j=0;j<width;j++) {
+                result[i][j] = image.getRGB(j, i);
+            }
+        }
+
+        return result;
+    }
+
+    private static void translate(BufferedImage image, int m, int n) {
         int width = image.getWidth();
         int height = image.getHeight();
         int[][] imagePixel = getPixelArray(image);
         int[][] result = new int[height][width];
 
-        // Translate pixel array
         for (int i=0;i<height;i++) {
             if (i == height-n-1) break;
 
@@ -58,17 +73,75 @@ public class Geometri {
         }
     }
 
-    private static int[][] getPixelArray(BufferedImage image) {
+    private static void flip(BufferedImage image, String mode) {
         int width = image.getWidth();
         int height = image.getHeight();
+        int[][] imagePixel = getPixelArray(image);
         int[][] result = new int[height][width];
 
-        for (int i=0;i<height;i++) {
-            for(int j=0;j<width;j++) {
-                result[i][j] = image.getRGB(j, i);
-            }
+        switch (mode.toLowerCase()) {
+            case "vertical":
+                for (int i=0;i<height;i++) {
+                    for (int j=0;j<width;j++) {
+                        result[i][j] = imagePixel[(height-1) - i][j];
+                    }
+                }
+
+                break;
+
+            case "horizontal":
+                for (int i=0;i<height;i++) {
+                    for (int j=0;j<width;j++) {
+                        result[i][j] = imagePixel[i][(width-1) - j];
+                    }
+                }
+
+                break;
+
+            case "origin":
+                for (int i=0;i<height;i++) {
+                    for (int j=0;j<width;j++) {
+                        result[i][j] = imagePixel[(height-1) - i][(width-1) - j];
+                    }
+                }
+
+                break;
         }
 
-        return result;
+        for (int i=0;i<height;i++) {
+            for (int j=0;j<width;j++) {
+                image.setRGB(j, i, result[i][j]);
+            }
+        }
+    }
+
+    private static void scale(BufferedImage image, int sX, int sY) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+        int[][] imagePixel = getPixelArray(image);
+        int sWidth = width * sY;
+        int sHeight = height * sX;
+        int[][] result = new int[sHeight][sWidth];
+        int m = 0, n = 0;
+
+        for (int i=0;i<height;i++) {
+            for (int j=0;j<width;j++) {
+                result[m][n] = imagePixel[i][j];
+                result[m][n+1] = imagePixel[i][j];
+                result[m+1][n] = imagePixel[i][j];
+                result[m+1][n+1] = imagePixel[i][j];
+
+                n += sY;
+            }
+
+            m += sX;
+            n = 0;
+        }
+
+        for (int i=0;i<height;i++) {
+            for (int j=0;j<width;j++) {
+                image.setRGB(j, i, result[i][j]);
+            }
+        }
     }
 }
