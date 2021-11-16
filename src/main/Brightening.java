@@ -43,8 +43,8 @@ public class Brightening {
             for (int i = 0; i < height; i++) {
                 for (int j = 0; j < width; j++) {
                     Color c = new Color(image.getRGB(j, i));
-                    int col = (c.getRed() + c.getGreen() + c.getBlue()) / 3;
-                    int hasil = col + 100;
+                    int col = (c.getRed() + c.getGreen() + c.getBlue());
+                    int hasil = col + 50;
                     if (hasil > 255) {
                         hasil = 255;
                     } else if (hasil < 0) {
