@@ -18,8 +18,8 @@ public class Boolean {
      
       private static void readImage(String fileName) {
         try {
-            File inputFile = new File("D://gbr//2018.jpg");
-           // File inputFile = new File("C:\\Users\\ahmad\\IdeaProjects\\TugasPengCit\\src\\assets\\" + fileName + ".jpg");
+           // File inputFile = new File("D://gbr//2018.jpg");
+            File inputFile = new File("C:\\Users\\ahmad\\IdeaProjects\\TugasPengCit\\src\\assets\\" + fileName + ".jpg");
             image = ImageIO.read(inputFile);
 
             System.out.println("Reading complete");
@@ -28,8 +28,8 @@ public class Boolean {
         }
         
         try {
-            File inputFile = new File("D://gbr//16004.jpg");
-            //File inputFile = new File("C:\\Users\\ahmad\\IdeaProjects\\TugasPengCit\\src\\assets\\" + fileName + ".jpg");
+           // File inputFile = new File("D://gbr//16004.jpg");
+            File inputFile = new File("C:\\Users\\ahmad\\IdeaProjects\\TugasPengCit\\src\\assets\\" + fileName + ".jpg");
             image1 = ImageIO.read(inputFile);
 
             System.out.println("Reading complete");
@@ -40,8 +40,8 @@ public class Boolean {
 
 private static void writeImage(BufferedImage image, String fileName) {
         try {
-            File outputFile = new File("D://gbr//boolean1.jpg");
-            //File outputFile = new File("C:\\Users\\ahmad\\IdeaProjects\\TugasPengCit\\src\\output\\" + fileName + ".jpg");
+            //File outputFile = new File("D://gbr//boolean1.jpg");
+            File outputFile = new File("C:\\Users\\ahmad\\IdeaProjects\\TugasPengCit\\src\\output\\" + fileName + ".jpg");
             ImageIO.write(image, "jpg", outputFile);
             System.out.println("Writing complete");
         } catch (Exception e) {
@@ -55,7 +55,7 @@ private static void writeImage(BufferedImage image, String fileName) {
            int width = image.getWidth();
            int height = image.getHeight();
         
-         try {
+        try {
             for (int i = 0; i < height; i++) {
                 for (int j = 0; j < width; j++) {
                     Color c = new Color(image.getRGB(j, i));
@@ -73,17 +73,15 @@ private static void writeImage(BufferedImage image, String fileName) {
         
 
          // AND
-         private static void and(){
-
-            try {
-                readImage("2018");
+    private static void and(){
+        readImage("2018");
                
    
                int width = image.getWidth();
                int height = image.getHeight();
                int height1 = image1.getHeight();
                int width1 = image1.getHeight();
-               
+        try {     
             int h;
                 if (height < height1) {
                     h = height;
@@ -119,16 +117,16 @@ private static void writeImage(BufferedImage image, String fileName) {
 
         // OR
         private static void or(){
-
-            // OR
-        try {
-        readImage("2018");
+            readImage("2018");
                 
     
             int width = image.getWidth();
             int height = image.getHeight();
             int height1 = image1.getHeight();
             int width1 = image1.getHeight();
+            
+        try {
+        
             int h;
             if (height < height1) {
                 h = height;
