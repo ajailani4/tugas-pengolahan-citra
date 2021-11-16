@@ -34,32 +34,8 @@ public class Brightening {
     }
    
         
-//        rumus :
-//        Pencerahan Citra (image brightening) 
-// f(x,y)' = f(x,y)  + b
-//         b = 100
-                 
-//• Kecerahan citra dapat diperbaiki dengan menambahkan/mengurangkan
-//sebuah konstanta kepada (atau dari) setiap pixel. 
-//• Jika b positif, kecerahan citra bertambah, 
-//Jika b negatif kecerahan citra berkurang
-//• Perlu operasi clipping jika nilai f(x,y)’ berada di bawah nilai intensitas
-//minimum atau d atas nilai intensitas maksimum:
 
        private static void brightening(){
-        
- 
-//        rumus :
-//        Pencerahan Citra (image brightening) 
-// f(x,y)' = f(x,y)  + b
-//         b = 100
-                 
-//• Kecerahan citra dapat diperbaiki dengan menambahkan/mengurangkan
-//sebuah konstanta kepada (atau dari) setiap pixel. 
-//• Jika b positif, kecerahan citra bertambah, 
-//Jika b negatif kecerahan citra berkurang
-//• Perlu operasi clipping jika nilai f(x,y)’ berada di bawah nilai intensitas
-//minimum atau d atas nilai intensitas maksimum:
 
         try {
             readImage("2018");
