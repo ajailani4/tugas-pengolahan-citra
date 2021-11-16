@@ -39,8 +39,8 @@ public class Geometri {
         int height = image.getHeight();
         int[][] result = new int[height][width];
 
-        for (int i=0;i<height;i++) {
-            for(int j=0;j<width;j++) {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
                 result[i][j] = image.getRGB(j, i);
             }
         }
@@ -56,18 +56,18 @@ public class Geometri {
         int[][] imagePixel = getPixelArray(image);
         int[][] result = new int[height][width];
 
-        for (int i=0;i<height;i++) {
-            if (i == height-n-1) break;
+        for (int i = 0; i < height; i++) {
+            if (i == height - n - 1) break;
 
-            for (int j=0;j<width;j++) {
-                if (j == width-m-1) break;
+            for (int j = 0; j < width; j++) {
+                if (j == width - m - 1) break;
 
-                result[i][j] = imagePixel[i+n][j+m];
+                result[i][j] = imagePixel[i + n][j + m];
             }
         }
 
-        for (int i=0;i<height;i++) {
-            for (int j=0;j<width;j++) {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
                 image.setRGB(j, i, result[i][j]);
             }
         }
@@ -85,35 +85,35 @@ public class Geometri {
 
         switch (mode.toLowerCase()) {
             case "vertical":
-                for (int i=0;i<height;i++) {
-                    for (int j=0;j<width;j++) {
-                        result[i][j] = imagePixel[(height-1) - i][j];
+                for (int i = 0; i < height; i++) {
+                    for (int j = 0; j < width; j++) {
+                        result[i][j] = imagePixel[(height - 1) - i][j];
                     }
                 }
 
                 break;
 
             case "horizontal":
-                for (int i=0;i<height;i++) {
-                    for (int j=0;j<width;j++) {
-                        result[i][j] = imagePixel[i][(width-1) - j];
+                for (int i = 0; i < height; i++) {
+                    for (int j = 0; j < width; j++) {
+                        result[i][j] = imagePixel[i][(width - 1) - j];
                     }
                 }
 
                 break;
 
             case "origin":
-                for (int i=0;i<height;i++) {
-                    for (int j=0;j<width;j++) {
-                        result[i][j] = imagePixel[(height-1) - i][(width-1) - j];
+                for (int i = 0; i < height; i++) {
+                    for (int j = 0; j < width; j++) {
+                        result[i][j] = imagePixel[(height - 1) - i][(width - 1) - j];
                     }
                 }
 
                 break;
         }
 
-        for (int i=0;i<height;i++) {
-            for (int j=0;j<width;j++) {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
                 image.setRGB(j, i, result[i][j]);
             }
         }
@@ -132,12 +132,12 @@ public class Geometri {
         int[][] result = new int[sHeight][sWidth];
         int m = 0, n = 0;
 
-        for (int i=0;i<height;i++) {
-            for (int j=0;j<width;j++) {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
                 result[m][n] = imagePixel[i][j];
-                result[m][n+1] = imagePixel[i][j];
-                result[m+1][n] = imagePixel[i][j];
-                result[m+1][n+1] = imagePixel[i][j];
+                result[m][n + 1] = imagePixel[i][j];
+                result[m + 1][n] = imagePixel[i][j];
+                result[m + 1][n + 1] = imagePixel[i][j];
 
                 n += sY;
             }
@@ -146,8 +146,8 @@ public class Geometri {
             n = 0;
         }
 
-        for (int i=0;i<height;i++) {
-            for (int j=0;j<width;j++) {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
                 image.setRGB(j, i, result[i][j]);
             }
         }
