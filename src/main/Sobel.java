@@ -1,73 +1,106 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package main;
-import java.awt.Color;
+
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import javax.imageio.ImageIO;
-import java.io.IOException;
-/**
- *
- * @author Chaca Annisa
- */
+
 public class Sobel {
+    static BufferedImage image = null;
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) throws IOException {
-        int width = 321;
-        int height = 481;
-        BufferedImage image = null;
-        int[][] pixelMatrix=new int[3][3];
-        try {
-            File input_file = new File("D:\\gbr\\2018.jpg");
-            image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-
-            image = ImageIO.read(input_file);
-            System.out.println("Reading complete.");
-        }
-
-        catch (IOException e) {
-            System.out.println("Error: " + e);
-        }
-        try {
-
-        for(int i=1;i<width-1;i++){
-            for(int j=1;j<height-1;j++){
-                
-                pixelMatrix[0][0]=new Color(image.getRGB(i-1,j-1)).getRed();
-                pixelMatrix[0][1]=new Color(image.getRGB(i-1,j)).getRed();
-                pixelMatrix[0][2]=new Color(image.getRGB(i-1,j+1)).getRed();
-                pixelMatrix[1][0]=new Color(image.getRGB(i,j-1)).getRed();
-                pixelMatrix[1][2]=new Color(image.getRGB(i,j+1)).getRed();
-                pixelMatrix[2][0]=new Color(image.getRGB(i+1,j-1)).getRed();
-                pixelMatrix[2][1]=new Color(image.getRGB(i+1,j)).getRed();
-                pixelMatrix[2][2]=new Color(image.getRGB(i+1,j+1)).getRed();
-
-                int edge=(int) convolution(pixelMatrix);
-                image.setRGB(i,j,(edge<<16 | edge<<8 | edge));
-            }
-        }
-         File output_file = new File("D:\\gbr\\sobel.jpg");
-            ImageIO.write(image, "jpg", output_file);
-            System.out.println("Writing complete.");
-        }
-
-        catch (IOException e) {
-            System.out.println("Error: " + e);
+    public static void main(String[] args) {
+        sobel();
     }
-        
-    
-}
-    public static double convolution(int[][] pixelMatrix){
 
-    int gy=(pixelMatrix[0][0]*-1)+(pixelMatrix[0][1]*-2)+(pixelMatrix[0][2]*-1)+(pixelMatrix[2][0])+(pixelMatrix[2][1]*2)+(pixelMatrix[2][2]*1);
-    int gx=(pixelMatrix[0][0])+(pixelMatrix[0][2]*-1)+(pixelMatrix[1][0]*2)+(pixelMatrix[1][2]*-2)+(pixelMatrix[2][0])+(pixelMatrix[2][2]*-1);
-    return Math.sqrt(Math.pow(gy,2)+Math.pow(gx,2));
+    private static void readImage(String fileName) {
+        try {
+            File inputFile = new File("C:\\Users\\ahmad\\IdeaProjects\\TugasPengCit\\src\\assets\\" + fileName + ".jpg");
+            image = ImageIO.read(inputFile);
 
-}
+            System.out.println("Reading complete");
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+    }
+
+    private static void writeImage(BufferedImage image, String fileName) {
+        try {
+            File outputFile = new File("C:\\Users\\ahmad\\IdeaProjects\\TugasPengCit\\src\\output\\" + fileName + ".jpg");
+            ImageIO.write(image, "jpg", outputFile);
+            System.out.println("Writing complete");
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+    }
+
+    private static void sobel() {
+        try {
+            readImage("100080");
+
+            int width = image.getWidth();
+            int height = image.getHeight();
+
+            int[][] edgeColors = new int[width][height];
+            int maxGradient = -1;
+
+            for (int i = 1; i < width - 1; i++) {
+                for (int j = 1; j < height - 1; j++) {
+
+                    int val00 = getGrayScale(image.getRGB(i - 1, j - 1));
+                    int val01 = getGrayScale(image.getRGB(i - 1, j));
+                    int val02 = getGrayScale(image.getRGB(i - 1, j + 1));
+
+                    int val10 = getGrayScale(image.getRGB(i, j - 1));
+                    int val11 = getGrayScale(image.getRGB(i, j));
+                    int val12 = getGrayScale(image.getRGB(i, j + 1));
+
+                    int val20 = getGrayScale(image.getRGB(i + 1, j - 1));
+                    int val21 = getGrayScale(image.getRGB(i + 1, j));
+                    int val22 = getGrayScale(image.getRGB(i + 1, j + 1));
+
+                    int gx = ((-1 * val00) + (0 * val01) + (1 * val02))
+                        + ((-2 * val10) + (0 * val11) + (2 * val12))
+                        + ((-1 * val20) + (0 * val21) + (1 * val22));
+
+                    int gy = ((-1 * val00) + (-2 * val01) + (-1 * val02))
+                        + ((0 * val10) + (0 * val11) + (0 * val12))
+                        + ((1 * val20) + (2 * val21) + (1 * val22));
+
+                    double gval = Math.sqrt((gx * gx) + (gy * gy));
+                    int g = (int) gval;
+
+                    if (maxGradient < g) {
+                        maxGradient = g;
+                    }
+
+                    edgeColors[i][j] = g;
+                }
+            }
+
+            double scale = 255.0 / maxGradient;
+
+            for (int i = 1; i < width - 1; i++) {
+                for (int j = 1; j < height - 1; j++) {
+                    int edgeColor = edgeColors[i][j];
+                    edgeColor = (int) (edgeColor * scale);
+                    edgeColor = 0xff000000 | (edgeColor << 16) | (edgeColor << 8) | edgeColor;
+
+                    image.setRGB(i, j, edgeColor);
+                }
+            }
+
+            writeImage(image, "sobel_gbr1");
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+    }
+
+    public static int getGrayScale(int rgb) {
+        int r = (rgb >> 16) & 0xff;
+        int g = (rgb >> 8) & 0xff;
+        int b = (rgb) & 0xff;
+
+        int gray = (int) (0.2126 * r + 0.7152 * g + 0.0722 * b);
+
+        return gray;
+    }
 }
