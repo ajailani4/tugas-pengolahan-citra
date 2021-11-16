@@ -7,58 +7,83 @@ import javax.imageio.ImageIO;
 import java.io.IOException;
 
 public class Boolean {
-    public static void main(String[] args) throws IOException {
-        int width = 321;
-        int height = 481;
-        BufferedImage image = null;
+    static BufferedImage image = null;
+     static BufferedImage image1 = null;
+
+      public static void main(String[]args){
+        not();
+        and();
+        or();
+     }
+     
+      private static void readImage(String fileName) {
         try {
-            File input_file = new File("D:\\gbr\\2018.jpg");
-            image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+            File inputFile = new File("D://gbr//2018.jpg");
+           // File inputFile = new File("C:\\Users\\ahmad\\IdeaProjects\\TugasPengCit\\src\\assets\\" + fileName + ".jpg");
+            image = ImageIO.read(inputFile);
 
-            image = ImageIO.read(input_file);
-            System.out.println("Reading complete.");
-        }
-
-        catch (IOException e) {
+            System.out.println("Reading complete");
+        } catch (Exception e) {
             System.out.println("Error: " + e);
         }
-
-        int height1 = 321;
-        BufferedImage image1 = null;
+        
         try {
-            File input_file = new File("D:\\gbr\\16004.jpg");
-            image1 = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+            File inputFile = new File("D://gbr//16004.jpg");
+            //File inputFile = new File("C:\\Users\\ahmad\\IdeaProjects\\TugasPengCit\\src\\assets\\" + fileName + ".jpg");
+            image1 = ImageIO.read(inputFile);
 
-            image1 = ImageIO.read(input_file);
-            System.out.println("Reading complete.");
-        }
-
-        catch (IOException e) {
+            System.out.println("Reading complete");
+        } catch (Exception e) {
             System.out.println("Error: " + e);
         }
+    }
 
-        // // NOT
+private static void writeImage(BufferedImage image, String fileName) {
+        try {
+            File outputFile = new File("D://gbr//boolean1.jpg");
+            //File outputFile = new File("C:\\Users\\ahmad\\IdeaProjects\\TugasPengCit\\src\\output\\" + fileName + ".jpg");
+            ImageIO.write(image, "jpg", outputFile);
+            System.out.println("Writing complete");
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+    }
+    
+    private static void not(){
+        readImage("2018");
+
+           int width = image.getWidth();
+           int height = image.getHeight();
+        
          try {
-         for (int i = 0; i < height; i++) {
-         for (int j = 0; j < width; j++) {
-         Color c = new Color(image.getRGB(j, i));
-         int col = (int) ((c.getRed() + c.getBlue() + c.getGreen()) / 3);
-         int hasil = 255 - col;
-         Color newColor = new Color(hasil, hasil, hasil);
-         image.setRGB(j, i, newColor.getRGB());
-         }
-         }
-         File output_file = new File("D:\\gbr\\not.jpg");
-         ImageIO.write(image, "jpg", output_file);
-         System.out.println("Writing complete.");
-         }
-
-         catch (IOException e) {
-         System.out.println("Error: " + e);
-         }
+            for (int i = 0; i < height; i++) {
+                for (int j = 0; j < width; j++) {
+                    Color c = new Color(image.getRGB(j, i));
+                    int col = (int) ((c.getRed() + c.getBlue() + c.getGreen()) / 3);
+                    int hasil = 255 - col;
+                    Color newColor = new Color(hasil, hasil, hasil);
+                    image.setRGB(j, i, newColor.getRGB());
+                }
+            }
+        writeImage(image, "not_boolean");
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+    }
+        
 
          // AND
-         try {
+         private static void and(){
+
+            try {
+                readImage("2018");
+               
+   
+               int width = image.getWidth();
+               int height = image.getHeight();
+               int height1 = image1.getHeight();
+               int width1 = image1.getHeight();
+               
             int h;
                 if (height < height1) {
                     h = height;
@@ -86,17 +111,24 @@ public class Boolean {
                         image.setRGB(j, i, newColor.getRGB());
                     }
                 }
-            File output_file = new File("D:\\gbr\\and.jpg");
-            ImageIO.write(image, "jpg", output_file);
-            System.out.println("Writing complete.");
-        }
-
-        catch (IOException e) {
-         System.out.println("Error: " + e);
+                writeImage(image, "and_boolean");
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
+            }
         }
 
         // OR
+        private static void or(){
+
+            // OR
         try {
+        readImage("2018");
+                
+    
+            int width = image.getWidth();
+            int height = image.getHeight();
+            int height1 = image1.getHeight();
+            int width1 = image1.getHeight();
             int h;
             if (height < height1) {
                 h = height;
@@ -124,12 +156,8 @@ public class Boolean {
                     image.setRGB(j, i, newColor.getRGB());
                 }
             }
-            File output_file = new File("D:\\gbr\\boolean.jpg");
-            ImageIO.write(image, "jpg", output_file);
-            System.out.println("Writing complete.");
-        }
-
-        catch (IOException e) {
+            writeImage(image, "or_boolean");
+        } catch (Exception e) {
             System.out.println("Error: " + e);
         }
     }
