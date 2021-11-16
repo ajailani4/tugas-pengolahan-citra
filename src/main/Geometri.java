@@ -8,20 +8,18 @@ public class Geometri {
     static BufferedImage image = null;
 
     public static void main(String[] args) {
-        readImage();
-//        translate(image, 15, 10);
-//        flip(image, "horizontal");
-//        scale(image, 2, 2);
-        writeImage(image, "geometri_gbr5");
+        translate(15, 10);
+        flip("horizontal");
+        scale(2, 2);
     }
 
-    private static void readImage() {
+    private static void readImage(String fileName) {
         try {
-            File inputFile = new File("C:\\Users\\ahmad\\IdeaProjects\\TugasPengCit\\src\\assets\\Prince_Zuko.jpg");
+            File inputFile = new File("C:\\Users\\ahmad\\IdeaProjects\\TugasPengCit\\src\\assets\\" + fileName + ".jpg");
             image = ImageIO.read(inputFile);
 
             System.out.println("Reading complete");
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println("Error: " + e);
         }
     }
@@ -50,7 +48,9 @@ public class Geometri {
         return result;
     }
 
-    private static void translate(BufferedImage image, int m, int n) {
+    private static void translate(int m, int n) {
+        readImage("2018");
+
         int width = image.getWidth();
         int height = image.getHeight();
         int[][] imagePixel = getPixelArray(image);
@@ -71,9 +71,13 @@ public class Geometri {
                 image.setRGB(j, i, result[i][j]);
             }
         }
+
+        writeImage(image, "geometri_gbr1");
     }
 
-    private static void flip(BufferedImage image, String mode) {
+    private static void flip(String mode) {
+        readImage("16004");
+
         int width = image.getWidth();
         int height = image.getHeight();
         int[][] imagePixel = getPixelArray(image);
@@ -113,9 +117,13 @@ public class Geometri {
                 image.setRGB(j, i, result[i][j]);
             }
         }
+
+        writeImage(image, "geometri_gbr2");
     }
 
-    private static void scale(BufferedImage image, int sX, int sY) {
+    private static void scale(int sX, int sY) {
+        readImage("23084");
+
         int width = image.getWidth();
         int height = image.getHeight();
         int[][] imagePixel = getPixelArray(image);
@@ -143,5 +151,7 @@ public class Geometri {
                 image.setRGB(j, i, result[i][j]);
             }
         }
+
+        writeImage(image, "geometri_gbr3");
     }
 }

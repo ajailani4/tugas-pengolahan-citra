@@ -13,12 +13,22 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/src/main/Gaussian.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/src/main/Geometri.java">
           <value>
             <set />
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/src/main/Grayscale.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/RGB.java">
           <value>
             <set />
           </value>
